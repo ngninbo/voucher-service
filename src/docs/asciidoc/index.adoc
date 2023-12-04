@@ -1,0 +1,9 @@
+= Voucher Service documentation
+
+This is an example output for the service running at http://localhost:8080:
+
+.request
+include::{snippets}/voucher/http-request.adoc[]
+
+.response
+include::{snippets}/voucher/http-response.adoc[]
