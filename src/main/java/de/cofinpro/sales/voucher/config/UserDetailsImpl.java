@@ -25,7 +25,7 @@ public class UserDetailsImpl implements UserDetails {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.isAccountNonLocked = user.isAccountNonLocked();
-        this.rolesAndAuthorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
+        this.rolesAndAuthorities = List.of(new SimpleGrantedAuthority(user.getRole().getName()));
     }
 
     @Override

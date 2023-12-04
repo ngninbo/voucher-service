@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
         if (count <= 0) {
             user.setAccountNonLocked(true);
-            user.setRole(Role.ROLE_ADMINISTRATOR);
+            user.setRole(Role.ADMIN);
         } else {
             var userFromRepo = userRepository.findByEmailIgnoreCase(user.getEmail());
 
@@ -56,8 +56,7 @@ public class UserServiceImpl implements UserService {
                 throw new UserAlreadyExistException("User already exist!");
             }
 
-            user.setRole(Role.ROLE_SUPPORT);
-
+            user.setRole(Role.SUPPORT);
         }
 
         return userMapper.toDto(userRepository.save(user));
@@ -77,11 +76,11 @@ public class UserServiceImpl implements UserService {
             throw new RoleUpdateException("User can have only one role");
         }
 
-        if (user.getRole().getDescription().equals(request.getRole())) {
+        if (user.getRole().equals(request.getRole())) {
             throw new UserAlreadyExistException("User already has the role");
         }
 
-        user.setRole(Role.valueOf("ROLE_".concat(request.getRole())));
+        user.setRole(request.getRole());
         return userMapper.toDto(userRepository.save(user));
     }
 

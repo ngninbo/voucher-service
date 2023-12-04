@@ -1,7 +1,7 @@
 package de.cofinpro.sales.voucher.config;
 
-import de.cofinpro.sales.voucher.config.RestAuthenticationEntryPoint;
 import de.cofinpro.sales.voucher.handler.VoucherServiceAccessDeniedHandler;
+import de.cofinpro.sales.voucher.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static de.cofinpro.sales.voucher.model.Role.ROLE_ADMINISTRATOR;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -45,10 +44,10 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.GET, "/voucher-service/voucher").hasRole(ROLE_ADMINISTRATOR.getDescription())
-                        .requestMatchers(HttpMethod.GET, "/voucher-service/user", "/voucher-service/user/**").hasRole(ROLE_ADMINISTRATOR.getDescription())
-                        .requestMatchers(HttpMethod.POST, "/voucher-service/user/role").hasRole(ROLE_ADMINISTRATOR.getDescription())
-                        .requestMatchers(HttpMethod.DELETE, "/voucher-service/user/**").hasRole(ROLE_ADMINISTRATOR.getDescription())
+                        .requestMatchers(HttpMethod.GET, "/voucher-service/voucher").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/voucher-service/user", "/voucher-service/user/**").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/voucher-service/user/role").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.DELETE, "/voucher-service/user/**").hasRole(Role.ADMIN.name())
                         .requestMatchers("/actuator/shutdown").permitAll() // needs to run test
                         .requestMatchers("/", "/voucher-service/user/signup").permitAll()
                         .anyRequest().permitAll()

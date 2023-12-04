@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 @Data
@@ -22,15 +21,16 @@ public class RoleChangeRequest {
     @NotEmpty(message = "Email must not be empty")
     @Pattern(regexp = ".*@company\\.com", message = "Email from given domain not allowed")
     private String email;
-    @NotNull
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @AssertTrue(message = "Role must be SUPPORT or SALE")
     public boolean isValidRole() {
         return isNotAdminRole().test(role);
     }
 
-    private Predicate<String> isNotAdminRole() {
-        return role -> Role.ROLE_SALE.getDescription().equals(role) || Role.ROLE_SUPPORT.getDescription().equals(role);
+    private Predicate<Role> isNotAdminRole() {
+        return role -> Role.SALE.equals(role) || Role.SUPPORT.equals(role);
     }
 }

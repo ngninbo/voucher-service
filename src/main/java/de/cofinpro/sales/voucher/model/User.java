@@ -45,7 +45,7 @@ public class User {
 
     @JsonIgnore
     public boolean isAdmin() {
-        return Role.ROLE_ADMINISTRATOR.equals(role);
+        return Role.ADMIN.equals(role);
     }
 
     @Override
