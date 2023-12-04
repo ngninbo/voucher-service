@@ -36,18 +36,16 @@ public class User {
     private String email;
 
     @NotNull
-    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonIgnore
     private boolean accountNonLocked;
 
     @JsonIgnore
     public boolean isAdmin() {
-        return Role.ADMIN.equals(role);
+        return Role.ROLE_ADMINISTRATOR.equals(role);
     }
 
     @Override

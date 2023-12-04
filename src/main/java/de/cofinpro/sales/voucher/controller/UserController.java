@@ -2,6 +2,7 @@ package de.cofinpro.sales.voucher.controller;
 
 import de.cofinpro.sales.voucher.domain.RoleChangeRequest;
 import de.cofinpro.sales.voucher.domain.UserDeletionResponse;
+import de.cofinpro.sales.voucher.domain.UserDto;
 import de.cofinpro.sales.voucher.domain.VoucherServiceCustomErrorMessage;
 import de.cofinpro.sales.voucher.model.User;
 import de.cofinpro.sales.voucher.service.UserService;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,8 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/voucher-service", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
+@Tag(name = "User endpoints")
+@CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
 
     private final UserService userService;
@@ -40,7 +44,7 @@ public class UserController {
                     description = "Validation errors",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VoucherServiceCustomErrorMessage.class)) })
     })
-    public ResponseEntity<User> signup(@Valid @RequestBody User user) {
+    public ResponseEntity<UserDto> signup(@Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
     }
 
@@ -53,7 +57,7 @@ public class UserController {
                     description = "Access denied",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VoucherServiceCustomErrorMessage.class)) })
     })
-    public ResponseEntity<List<User>> fetchAll() {
+    public ResponseEntity<List<UserDto>> fetchAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 
@@ -99,7 +103,7 @@ public class UserController {
                     description = "User already has the role",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VoucherServiceCustomErrorMessage.class)) })
     })
-    public ResponseEntity<User> changeRole(@Valid @RequestBody RoleChangeRequest request) {
+    public ResponseEntity<UserDto> changeRole(@Valid @RequestBody RoleChangeRequest request) {
         return ResponseEntity.ok(userService.update(request));
     }
 }

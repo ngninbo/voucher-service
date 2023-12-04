@@ -2,6 +2,8 @@ package de.cofinpro.sales.voucher.service.impl;
 
 import de.cofinpro.sales.voucher.domain.RoleChangeRequest;
 import de.cofinpro.sales.voucher.domain.UserDeletionResponse;
+import de.cofinpro.sales.voucher.domain.UserDto;
+import de.cofinpro.sales.voucher.domain.UserMapper;
 import de.cofinpro.sales.voucher.exception.RoleUpdateException;
 import de.cofinpro.sales.voucher.exception.UserAlreadyExistException;
 import de.cofinpro.sales.voucher.exception.UserNotFoundException;
@@ -21,12 +23,15 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final UserMapper userMapper;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
-                           PasswordEncoder encoder) {
+                           PasswordEncoder encoder,
+                           UserMapper userMapper) {
         this.userRepository = userRepository;
         this.encoder = encoder;
+        this.userMapper = userMapper;
     }
 
 
@@ -36,14 +41,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(User user) {
+    public UserDto create(User user) {
         var count = userRepository.count();
 
         user.setPassword(encoder.encode(user.getPassword()));
 
         if (count <= 0) {
             user.setAccountNonLocked(true);
-            user.setRole(Role.ADMIN);
+            user.setRole(Role.ROLE_ADMINISTRATOR);
         } else {
             var userFromRepo = userRepository.findByEmailIgnoreCase(user.getEmail());
 
@@ -51,20 +56,20 @@ public class UserServiceImpl implements UserService {
                 throw new UserAlreadyExistException("User already exist!");
             }
 
-            user.setRole(Role.SUPPORT);
+            user.setRole(Role.ROLE_SUPPORT);
 
         }
 
-        return userRepository.save(user);
+        return userMapper.toDto(userRepository.save(user));
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDto> findAll() {
+        return userMapper.toList(userRepository.findAll());
     }
 
     @Override
-    public User update(RoleChangeRequest request) {
+    public UserDto update(RoleChangeRequest request) {
         User user = userRepository.findByEmailIgnoreCase(request.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("User not found!"));
 
@@ -72,12 +77,12 @@ public class UserServiceImpl implements UserService {
             throw new RoleUpdateException("User can have only one role");
         }
 
-        if (user.getRole().equals(request.getRole())) {
+        if (user.getRole().getDescription().equals(request.getRole())) {
             throw new UserAlreadyExistException("User already has the role");
         }
 
-        user.setRole(request.getRole());
-        return userRepository.save(user);
+        user.setRole(Role.valueOf("ROLE_".concat(request.getRole())));
+        return userMapper.toDto(userRepository.save(user));
     }
 
     @Override
