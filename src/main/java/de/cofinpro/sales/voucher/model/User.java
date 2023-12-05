@@ -41,7 +41,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private boolean accountNonLocked;
+    private boolean enabled = true;
+
+    private boolean accountNonLocked = true;
+
+    private int failedAttempt;
 
     @JsonIgnore
     public boolean isAdmin() {

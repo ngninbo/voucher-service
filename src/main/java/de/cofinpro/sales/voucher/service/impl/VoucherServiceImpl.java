@@ -5,4 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VoucherServiceImpl implements VoucherService {
+
+    @Override
+    public String getMessage() {
+        return "Hello, world!";
+    }
 }

@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface UserService {
 
+    int MAX_FAILED_ATTEMPTS = 5;
+
     Optional<User> findByEmail(String email);
 
     UserDto create(User user);
@@ -19,4 +21,10 @@ public interface UserService {
     UserDto update(RoleChangeRequest request);
 
     UserDeletionResponse remove(String email);
+
+    User increaseFailedAttempts(User currentUser);
+
+    void lock(User user);
+
+    void resetFailedAttempts(String email);
 }

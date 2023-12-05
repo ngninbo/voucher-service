@@ -90,4 +90,22 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
         return UserDeletionResponse.builder().status(UserDeletionResponse.DEFAULT_STATUS).username(user.getName()).build();
     }
+
+    @Override
+    public User increaseFailedAttempts(User user) {
+        int newFailAttempts = user.getFailedAttempt() + 1;
+        user.setFailedAttempt(newFailAttempts);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void lock(User user) {
+        user.setAccountNonLocked(false);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void resetFailedAttempts(String email) {
+        userRepository.updateFailedAttempts(0, email);
+    }
 }

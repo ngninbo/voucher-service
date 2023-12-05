@@ -1,4 +1,4 @@
-package de.cofinpro.sales.voucher.config;
+package de.cofinpro.sales.voucher.security;
 
 import de.cofinpro.sales.voucher.handler.VoucherServiceAccessDeniedHandler;
 import de.cofinpro.sales.voucher.model.Role;

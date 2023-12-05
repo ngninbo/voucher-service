@@ -1,6 +1,6 @@
 package de.cofinpro.sales.voucher.service.impl;
 
-import de.cofinpro.sales.voucher.config.UserDetailsImpl;
+import de.cofinpro.sales.voucher.domain.UserDetailsImpl;
 import de.cofinpro.sales.voucher.model.User;
 import de.cofinpro.sales.voucher.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package de.cofinpro.sales.voucher.config;
+package de.cofinpro.sales.voucher.domain;
 
 import de.cofinpro.sales.voucher.model.User;
 import lombok.Getter;

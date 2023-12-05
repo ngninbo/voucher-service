@@ -1,4 +1,4 @@
-package de.cofinpro.sales.voucher.config;
+package de.cofinpro.sales.voucher.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
