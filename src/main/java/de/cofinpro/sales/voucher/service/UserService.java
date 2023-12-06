@@ -27,4 +27,23 @@ public interface UserService {
     void lock(User user);
 
     void resetFailedAttempts(String email);
+
+    default void handleFailedAttempt(String email) {
+        findByEmail(email).ifPresent(this::handleFailedAttempt);
+    }
+
+    default void handleFailedAttempt(User user) {
+
+        if (user.isAdmin()) {
+            return;
+        }
+
+        if (user.isEnabled() && user.isAccountNonLocked()) {
+            user = increaseFailedAttempts(user);
+        }
+
+        if (user.getFailedAttempt() >= UserService.MAX_FAILED_ATTEMPTS) {
+            lock(user);
+        }
+    }
 }

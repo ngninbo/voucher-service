@@ -106,6 +106,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void resetFailedAttempts(String email) {
-        userRepository.updateFailedAttempts(0, email);
+        User user = findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (user.getFailedAttempt() > 0) {
+            userRepository.updateFailedAttempts(0, email);
+        }
     }
 }

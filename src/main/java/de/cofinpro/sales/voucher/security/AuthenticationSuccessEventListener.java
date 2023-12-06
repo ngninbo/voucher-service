@@ -1,6 +1,5 @@
 package de.cofinpro.sales.voucher.security;
 
-import de.cofinpro.sales.voucher.model.User;
 import de.cofinpro.sales.voucher.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -21,10 +20,6 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         var userDetails = (UserDetails) event.getAuthentication().getPrincipal();
-
-        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
-        if (user.getFailedAttempt() > 0) {
-            userService.resetFailedAttempts(user.getEmail());
-        }
+        userService.resetFailedAttempts(userDetails.getUsername());
     }
 }

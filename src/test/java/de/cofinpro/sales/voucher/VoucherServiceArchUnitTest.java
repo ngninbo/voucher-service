@@ -126,6 +126,7 @@ public class VoucherServiceArchUnitTest {
                 .layer(SERVICE_LAYER).definedBy(SERVICE_PACKAGE)
                 .layer(PERSISTENCE_LAYER).definedBy(PERSISTENCE_PACKAGE)
 
+                .whereLayer(SECURITY_LAYER).mayNotBeAccessedByAnyLayer()
                 .whereLayer(CONTROLLER_LAYER).mayNotBeAccessedByAnyLayer()
                 .whereLayer(SERVICE_LAYER).mayOnlyBeAccessedByLayers(CONTROLLER_LAYER, SECURITY_LAYER)
                 .whereLayer(PERSISTENCE_LAYER).mayOnlyBeAccessedByLayers(SERVICE_LAYER)
