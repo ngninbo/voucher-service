@@ -76,19 +76,20 @@ public class UserServiceImpl implements UserService {
             throw new RoleUpdateException("User can have only one role");
         }
 
-        if (user.getRole().equals(request.getRole())) {
+        if (user.getRole().name().equals(request.getRole())) {
             throw new UserAlreadyExistException("User already has the role");
         }
 
-        user.setRole(request.getRole());
+        user.setRole(Role.valueOf(request.getRole()));
         return userMapper.toDto(userRepository.save(user));
     }
 
     @Override
     public UserDeletionResponse remove(String email) {
-        User user = userRepository.findByEmailIgnoreCase(email).orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User by email %s not found", email)));
         userRepository.delete(user);
-        return UserDeletionResponse.builder().status(UserDeletionResponse.DEFAULT_STATUS).username(user.getName()).build();
+        return UserDeletionResponse.builder().status(UserDeletionResponse.DEFAULT_STATUS).email(user.getEmail()).build();
     }
 
     @Override

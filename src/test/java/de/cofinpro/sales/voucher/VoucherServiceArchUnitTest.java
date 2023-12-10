@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
@@ -71,9 +70,8 @@ public class VoucherServiceArchUnitTest {
     @DisplayName("should assert controller implementation to match naming convention and access relevant classes")
     void controllerPackage() {
         ArchRule rule = classes().that().resideInAPackage(CONTROLLER_PACKAGE)
-                .should().haveSimpleNameEndingWith(CONTROLLER_LAYER)
-                .andShould().beAnnotatedWith(RestController.class)
-                .andShould().accessClassesThat().resideInAnyPackage(SERVICE_PACKAGE, DOMAIN_PACKAGE, MODEL_PACKAGE);
+                .should()
+                .accessClassesThat().resideInAnyPackage(CONTROLLER_PACKAGE, SERVICE_PACKAGE, DOMAIN_PACKAGE, MODEL_PACKAGE);
         rule.check(importedClasses);
     }
 

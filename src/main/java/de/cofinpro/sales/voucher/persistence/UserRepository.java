@@ -14,8 +14,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByEmailIgnoreCase(String email);
 
-    Optional<User> findUsersByNameIgnoreCase(String name);
-
     List<User> findAll();
 
     @Query("UPDATE User u SET u.failedAttempt = ?1 WHERE u.email = ?2")

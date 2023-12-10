@@ -118,6 +118,7 @@
                         <configuration>
                             <backend>html</backend>
                             <doctype>book</doctype>
+                            <outputDirectory>src/main/resources/static</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

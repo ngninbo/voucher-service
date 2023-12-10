@@ -1,18 +1,131 @@
 = Voucher Service documentation
 
-This is an example output for the service running at http://localhost:8080:
+== Add new user
 
 .http-request
-include::{snippets}/voucher/http-request.adoc[]
+include::{snippets}/user/signup/http-request.adoc[]
 
 .curl-request
-include::{snippets}/voucher/curl-request.adoc[]
+include::{snippets}/user/signup/curl-request.adoc[]
 
 .httpie-request
-include::{snippets}/voucher/httpie-request.adoc[]
-
-.response
-include::{snippets}/voucher/http-response.adoc[]
+include::{snippets}/user/signup/httpie-request.adoc[]
 
 .response-body
-include::{snippets}/voucher/response-body.adoc[]
+include::{snippets}/user/signup/response-body.adoc[]
+
+== Adding already existing user
+
+.http-request
+include::{snippets}/user/user-exist/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/user-exist/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/user-exist/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/user-exist/response-body.adoc[]
+
+== Updating user role with invalid role
+
+.http-request
+include::{snippets}/user/role-bad-request/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/role-bad-request/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/role-bad-request/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/role-bad-request/response-body.adoc[]
+
+
+== Updating user role with invalid email
+
+.http-request
+include::{snippets}/user/role-bad-request-email/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/role-bad-request-email/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/role-bad-request-email/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/role-bad-request-email/response-body.adoc[]
+
+
+== Updating user admin role
+
+.http-request
+include::{snippets}/user/update_role_admin/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/update_role_admin/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/update_role_admin/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/update_role_admin/response-body.adoc[]
+
+== Updating user having same role
+
+.http-request
+include::{snippets}/user/update_role_same/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/update_role_same/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/update_role_same/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/update_role_same/response-body.adoc[]
+
+== Updating user role with valid request
+
+.http-request
+include::{snippets}/user/update_role_ok/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/update_role_ok/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/update_role_ok/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/update_role_ok/response-body.adoc[]
+
+=== Deleting user
+
+.http-request
+include::{snippets}/user/delete/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/delete/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/delete/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/delete/response-body.adoc[]
+
+
+== Getting list of users
+
+.http-request
+include::{snippets}/user/list-ok/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/list-ok/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/list-ok/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/list-ok/response-body.adoc[]
+
