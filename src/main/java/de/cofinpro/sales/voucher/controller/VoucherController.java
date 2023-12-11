@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/voucher-service", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 @Tag(name = "Voucher endpoints")
 public class VoucherController {

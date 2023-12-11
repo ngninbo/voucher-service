@@ -23,10 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/voucher-service", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 @Tag(name = "User endpoints")
-@CrossOrigin(origins = "http://localhost:8080")
 public class UserController {
 
     private final UserService userService;

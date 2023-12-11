@@ -440,13 +440,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>Voucher Service documentation</h1>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><mark>Important</mark>: This is the base path of all request endpoints when service is hosted on port <code>8080</code> for example <code><a href="http://localhost:8080/voucher-service" class="bare">http://localhost:8080/voucher-service</a></code></p>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_add_new_user">Add new user</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /voucher-service/user/signup HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/signup HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 107
 Host: localhost:8080
@@ -462,7 +469,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user/signup' -i -X POST \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user/signup' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
   "name": "test",
@@ -480,7 +487,7 @@ Host: localhost:8080
   "lastname": "user",
   "email": "test.user004@company.com",
   "password": "admin123"
-}' | http POST 'http://localhost:8080/voucher-service/user/signup' \
+}' | http POST 'http://localhost:8080/api/user/signup' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
@@ -488,7 +495,7 @@ Host: localhost:8080
 <div class="title">response-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-json" data-lang="json">{
-  "id" : 752,
+  "id" : 1002,
   "name" : "test",
   "lastname" : "user",
   "email" : "test.user004@company.com",
@@ -504,7 +511,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /voucher-service/user/signup HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/user/signup HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 107
 Host: localhost:8080
@@ -520,7 +527,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user/signup' -i -X POST \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user/signup' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
   "name": "test",
@@ -538,7 +545,7 @@ Host: localhost:8080
   "lastname": "user",
   "email": "test.user004@company.com",
   "password": "admin123"
-}' | http POST 'http://localhost:8080/voucher-service/user/signup' \
+}' | http POST 'http://localhost:8080/api/user/signup' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
@@ -546,11 +553,11 @@ Host: localhost:8080
 <div class="title">response-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-json" data-lang="json">{
-  "timestamp" : "2023-12-10T14:20:23.980223",
+  "timestamp" : "2023-12-11T15:34:14.270914",
   "status" : 400,
   "error" : "Bad Request",
   "message" : "User already exist!",
-  "path" : "/voucher-service/user/signup"
+  "path" : "/api/user/signup"
 }</code></pre>
 </div>
 </div>
@@ -562,7 +569,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /voucher-service/user/role HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/user/role HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 59
 Host: localhost:8080
@@ -576,7 +583,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user/role' -i -X PUT \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user/role' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
   "email": "test.user001@company.com",
@@ -590,7 +597,7 @@ Host: localhost:8080
 <pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{
   "email": "test.user001@company.com",
   "role": "role"
-}' | http PUT 'http://localhost:8080/voucher-service/user/role' \
+}' | http PUT 'http://localhost:8080/api/user/role' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
@@ -598,11 +605,11 @@ Host: localhost:8080
 <div class="title">response-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-json" data-lang="json">{
-  "timestamp" : "2023-12-10T14:20:22.704855",
+  "timestamp" : "2023-12-11T15:34:12.811252",
   "status" : 400,
   "error" : "Bad Request",
   "message" : "Role must be SUPPORT or SALE",
-  "path" : "/voucher-service/user/role"
+  "path" : "/api/user/role"
 }</code></pre>
 </div>
 </div>
@@ -614,7 +621,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /voucher-service/user/role HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/user/role HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 63
 Host: localhost:8080
@@ -628,7 +635,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user/role' -i -X PUT \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user/role' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
   "email": "user.from@invalid_domain.com",
@@ -642,7 +649,7 @@ Host: localhost:8080
 <pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{
   "email": "user.from@invalid_domain.com",
   "role": "SALE"
-}' | http PUT 'http://localhost:8080/voucher-service/user/role' \
+}' | http PUT 'http://localhost:8080/api/user/role' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
@@ -650,11 +657,11 @@ Host: localhost:8080
 <div class="title">response-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-json" data-lang="json">{
-  "timestamp" : "2023-12-10T14:20:22.729207",
+  "timestamp" : "2023-12-11T15:34:12.851675",
   "status" : 400,
   "error" : "Bad Request",
   "message" : "Email from given domain not allowed",
-  "path" : "/voucher-service/user/role"
+  "path" : "/api/user/role"
 }</code></pre>
 </div>
 </div>
@@ -666,7 +673,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /voucher-service/user/role HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/user/role HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 61
 Host: localhost:8080
@@ -680,7 +687,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user/role' -i -X PUT \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user/role' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
   "email": "admin.admin@company.com",
@@ -694,7 +701,7 @@ Host: localhost:8080
 <pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{
   "email": "admin.admin@company.com",
   "role": "SUPPORT"
-}' | http PUT 'http://localhost:8080/voucher-service/user/role' \
+}' | http PUT 'http://localhost:8080/api/user/role' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
@@ -702,11 +709,11 @@ Host: localhost:8080
 <div class="title">response-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-json" data-lang="json">{
-  "timestamp" : "2023-12-10T14:20:22.584817",
+  "timestamp" : "2023-12-11T15:34:12.671003",
   "status" : 400,
   "error" : "Bad Request",
   "message" : "User can have only one role",
-  "path" : "/voucher-service/user/role"
+  "path" : "/api/user/role"
 }</code></pre>
 </div>
 </div>
@@ -718,7 +725,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /voucher-service/user/role HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/user/role HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 59
 Host: localhost:8080
@@ -732,7 +739,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user/role' -i -X PUT \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user/role' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
   "email": "test.user@company.com",
@@ -746,7 +753,7 @@ Host: localhost:8080
 <pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{
   "email": "test.user@company.com",
   "role": "SUPPORT"
-}' | http PUT 'http://localhost:8080/voucher-service/user/role' \
+}' | http PUT 'http://localhost:8080/api/user/role' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
@@ -754,11 +761,11 @@ Host: localhost:8080
 <div class="title">response-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-json" data-lang="json">{
-  "timestamp" : "2023-12-10T14:20:22.670963",
+  "timestamp" : "2023-12-11T15:34:12.764809",
   "status" : 400,
   "error" : "Bad Request",
   "message" : "User already has the role",
-  "path" : "/voucher-service/user/role"
+  "path" : "/api/user/role"
 }</code></pre>
 </div>
 </div>
@@ -770,7 +777,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /voucher-service/user/role HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/user/role HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Content-Length: 59
 Host: localhost:8080
@@ -784,7 +791,7 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user/role' -i -X PUT \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user/role' -i -X PUT \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
   "email": "test.user004@company.com",
@@ -798,7 +805,7 @@ Host: localhost:8080
 <pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{
   "email": "test.user004@company.com",
   "role": "SALE"
-}' | http PUT 'http://localhost:8080/voucher-service/user/role' \
+}' | http PUT 'http://localhost:8080/api/user/role' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
@@ -806,7 +813,7 @@ Host: localhost:8080
 <div class="title">response-body</div>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-json" data-lang="json">{
-  "id" : 752,
+  "id" : 1002,
   "name" : "test",
   "lastname" : "user",
   "email" : "test.user004@company.com",
@@ -819,20 +826,20 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /voucher-service/user/test.user004@company.com HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/user/test.user004@company.com HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user/test.user004@company.com' -i -X DELETE</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user/test.user004@company.com' -i -X DELETE</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">httpie-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ http DELETE 'http://localhost:8080/voucher-service/user/test.user004@company.com'</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ http DELETE 'http://localhost:8080/api/user/test.user004@company.com'</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -853,20 +860,20 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /voucher-service/user HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/user HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/voucher-service/user' -i -X GET</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/user' -i -X GET</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">httpie-request</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ http GET 'http://localhost:8080/voucher-service/user'</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ http GET 'http://localhost:8080/api/user'</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -904,7 +911,7 @@ Host: localhost:8080</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-12-10 13:09:41 +0100
+Last updated 2023-12-11 15:33:12 +0100
 </div>
 </div>
 </body>

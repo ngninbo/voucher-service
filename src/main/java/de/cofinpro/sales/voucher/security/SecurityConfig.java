@@ -44,12 +44,12 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.GET, "/voucher-service/voucher").hasRole(Role.ADMIN.name())
-                        .requestMatchers(HttpMethod.GET, "/voucher-service/user", "/voucher-service/user/**").hasRole(Role.ADMIN.name())
-                        .requestMatchers(HttpMethod.POST, "/voucher-service/user/role").hasRole(Role.ADMIN.name())
-                        .requestMatchers(HttpMethod.DELETE, "/voucher-service/user/**").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/api/voucher").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.GET, "/api/user", "/api/user/**").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/api/user/role").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.DELETE, "/api/user/**").hasRole(Role.ADMIN.name())
                         .requestMatchers("/actuator/shutdown").permitAll() // needs to run test
-                        .requestMatchers("/", "/voucher-service/user/signup").permitAll()
+                        .requestMatchers("/", "/api/user/signup").permitAll()
                         .anyRequest().permitAll()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(voucherServiceAccessDeniedHandler).authenticationEntryPoint(restAuthenticationEntryPoint))

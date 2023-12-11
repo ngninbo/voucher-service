@@ -1,5 +1,7 @@
 = Voucher Service documentation
 
+#Important#: This is the base path of all request endpoints when service is hosted on port `8080` for example `http://localhost:8080/voucher-service`
+
 == Add new user
 
 .http-request

@@ -49,6 +49,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs(outputDir = "target/snippets")
 class VoucherServiceApplicationTests {
 
+    private static final String API_ENDPOINT = "/api";
+
     @Autowired
     private WebApplicationContext context;
 
@@ -83,7 +85,7 @@ class VoucherServiceApplicationTests {
     @Test
     @WithMockUser(username="test", password = "pass", authorities = {"ROLE_ADMIN"})
     public void sample() throws Exception {
-        this.mockMvc.perform(get("/voucher-service/voucher"))
+        this.mockMvc.perform(get(API_ENDPOINT + "/voucher"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Hello, world!")))
@@ -94,7 +96,7 @@ class VoucherServiceApplicationTests {
     @DisplayName("should add, update role and remove user with success")
     void signup() throws Exception {
 
-        var result = this.mockMvc.perform(post("/voucher-service/user/signup")
+        var result = this.mockMvc.perform(post(API_ENDPOINT + "/user/signup")
                         .characterEncoding(Charset.defaultCharset())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -111,7 +113,7 @@ class VoucherServiceApplicationTests {
         assertNotNull(response.getId());
 
         // Adding Same User
-        this.mockMvc.perform(post("/voucher-service/user/signup")
+        this.mockMvc.perform(post(API_ENDPOINT + "/user/signup")
                         .characterEncoding(Charset.defaultCharset())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
@@ -123,7 +125,7 @@ class VoucherServiceApplicationTests {
         // Change Role
         String req = new ClassPathResource("user/update_role_ok.json").getContentAsString(Charset.defaultCharset());
 
-        result = this.mockMvc.perform(put("/voucher-service/user/role")
+        result = this.mockMvc.perform(put(API_ENDPOINT + "/user/role")
                         .with(user("test").password("pass").roles("ADMIN"))
                         .characterEncoding(Charset.defaultCharset())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -139,7 +141,7 @@ class VoucherServiceApplicationTests {
         assertThat(roleUpdateResponse.getRole(), is(Role.SALE));
 
         // Remove user
-        result = this.mockMvc.perform(delete("/voucher-service/user/{email}", userUpdateRequest.getEmail())
+        result = this.mockMvc.perform(delete(API_ENDPOINT + "/user/{email}", userUpdateRequest.getEmail())
                         .with(user("test").password("pass").roles("ADMIN")))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -157,7 +159,7 @@ class VoucherServiceApplicationTests {
     void changeRole(String jsonPath, String expectedMsg) throws Exception {
         String req = new ClassPathResource(jsonPath).getContentAsString(Charset.defaultCharset());
 
-        this.mockMvc.perform(put("/voucher-service/user/role")
+        this.mockMvc.perform(put(API_ENDPOINT + "/user/role")
                         .with(user("test").password("pass").roles("ADMIN"))
                         .characterEncoding(Charset.defaultCharset())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -171,7 +173,7 @@ class VoucherServiceApplicationTests {
     @Test
     @DisplayName("should return 403 when user is not authorized because of invalid role while getting list of user")
     void getList_Unauthorized() throws Exception {
-        mockMvc.perform(get("/voucher-service/user"))
+        mockMvc.perform(get(API_ENDPOINT + "/user"))
                 .andDo(print()).andExpect(status().isUnauthorized())
                 .andDo(document("user/list-unauthorized"));
     }
@@ -180,7 +182,7 @@ class VoucherServiceApplicationTests {
     @WithMockUser(username="test", password = "pass", authorities = {"ROLE_UNKNOWN"})
     @DisplayName("should return 403 when user is not authorized because of invalid role while getting list of user")
     void getList_access_denied() throws Exception {
-        mockMvc.perform(get("/voucher-service/user"))
+        mockMvc.perform(get(API_ENDPOINT + "/user"))
                 .andDo(print()).andExpect(status().isForbidden())
                 .andDo(document("user/list-denied"));
     }
@@ -189,7 +191,7 @@ class VoucherServiceApplicationTests {
     @WithMockUser(username="test", password = "pass", authorities = {"ROLE_ADMIN"})
     @DisplayName("should return 200 while getting list of user")
     void getList_ok() throws Exception {
-        mockMvc.perform(get("/voucher-service/user"))
+        mockMvc.perform(get(API_ENDPOINT + "/user"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("user/list-ok"));
@@ -198,7 +200,7 @@ class VoucherServiceApplicationTests {
     @Test
     @DisplayName("should return 401 when user is not authorized because of invalid credentials while deleting a user")
     void deleteUser_unauthorized() throws Exception {
-        this.mockMvc.perform(delete("/voucher-service/user/{email}", "notexisting.user@company.com"))
+        this.mockMvc.perform(delete(API_ENDPOINT + "/user/{email}", "notexisting.user@company.com"))
                 .andDo(print())
                 .andExpect(status().isUnauthorized())
                 .andDo(document("user/delete-unauthorized")).andReturn();
@@ -208,7 +210,7 @@ class VoucherServiceApplicationTests {
     @WithMockUser(username="test", password = "pass", authorities = {"ROLE_UNKNOWN"})
     @DisplayName("should return 403 when user is not authorized because of invalid role while deleting a user")
     void deleteUser_access_denied() throws Exception {
-        this.mockMvc.perform(delete("/voucher-service/user/{email}", "notexisting.user@company.com"))
+        this.mockMvc.perform(delete(API_ENDPOINT + "/user/{email}", "notexisting.user@company.com"))
                 .andDo(print())
                 .andExpect(status().isForbidden())
                 .andDo(document("user/delete-denied")).andReturn();
@@ -219,7 +221,7 @@ class VoucherServiceApplicationTests {
     @DisplayName("should return 404 when user not found while deleting a user")
     void deleteUser_not_found() throws Exception {
         String email = userUpdateRequest.getEmail();
-        var resp = this.mockMvc.perform(delete("/voucher-service/user/{email}", email))
+        var resp = this.mockMvc.perform(delete(API_ENDPOINT + "/user/{email}", email))
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andDo(document("user/delete-not-found")).andReturn();
@@ -241,7 +243,7 @@ class VoucherServiceApplicationTests {
     void changeRole(String jsonPath, String expectedMsg, String outputPath) throws Exception {
         String req = new ClassPathResource(jsonPath).getContentAsString(Charset.defaultCharset());
 
-        this.mockMvc.perform(put("/voucher-service/user/role")
+        this.mockMvc.perform(put(API_ENDPOINT + "/user/role")
                         .characterEncoding(Charset.defaultCharset())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req))
