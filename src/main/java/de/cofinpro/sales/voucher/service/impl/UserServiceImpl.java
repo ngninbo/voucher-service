@@ -1,9 +1,7 @@
 package de.cofinpro.sales.voucher.service.impl;
 
-import de.cofinpro.sales.voucher.domain.RoleChangeRequest;
-import de.cofinpro.sales.voucher.domain.UserDeletionResponse;
-import de.cofinpro.sales.voucher.domain.UserDto;
-import de.cofinpro.sales.voucher.domain.UserMapper;
+import de.cofinpro.sales.voucher.domain.*;
+import de.cofinpro.sales.voucher.exception.PasswordUpdateException;
 import de.cofinpro.sales.voucher.exception.RoleUpdateException;
 import de.cofinpro.sales.voucher.exception.UserAlreadyExistException;
 import de.cofinpro.sales.voucher.exception.UserNotFoundException;
@@ -11,7 +9,9 @@ import de.cofinpro.sales.voucher.model.Role;
 import de.cofinpro.sales.voucher.model.User;
 import de.cofinpro.sales.voucher.persistence.UserRepository;
 import de.cofinpro.sales.voucher.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User increaseFailedAttempts(User user) {
         int newFailAttempts = user.getFailedAttempt() + 1;
         user.setFailedAttempt(newFailAttempts);
@@ -100,17 +101,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void lock(User user) {
         user.setAccountNonLocked(false);
         userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public void resetFailedAttempts(String email) {
         User user = findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (user.getFailedAttempt() > 0) {
             userRepository.updateFailedAttempts(0, email);
         }
+    }
+
+
+    @Override
+    public PasswordChangeResponse changePass(PasswordChangeRequest request, UserDetails userDetails) {
+
+        final String newPassword = request.getPassword();
+
+        if (encoder.matches(newPassword, userDetails.getPassword())) {
+            throw new PasswordUpdateException("The password must be different!");
+        }
+
+        return updateUserBy(userDetails.getUsername(), newPassword);
+    }
+
+    @Override
+    public PasswordChangeResponse updateUserBy(String email, String newPassword) {
+        User user = findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        user.setPassword(encoder.encode(newPassword));
+
+        user = userRepository.save(user);
+
+        return PasswordChangeResponse.of(user.getEmail());
     }
 }

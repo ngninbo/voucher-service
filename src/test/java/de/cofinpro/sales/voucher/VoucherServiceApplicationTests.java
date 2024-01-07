@@ -1,9 +1,7 @@
 package de.cofinpro.sales.voucher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.cofinpro.sales.voucher.domain.UserDeletionResponse;
-import de.cofinpro.sales.voucher.domain.UserDto;
-import de.cofinpro.sales.voucher.domain.VoucherServiceCustomErrorMessage;
+import de.cofinpro.sales.voucher.domain.*;
 import de.cofinpro.sales.voucher.model.Role;
 import de.cofinpro.sales.voucher.model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -139,6 +137,40 @@ class VoucherServiceApplicationTests {
         assertNotNull(roleUpdateResponse);
         assertThat(roleUpdateResponse.getEmail(), is(userUpdateRequest.getEmail()));
         assertThat(roleUpdateResponse.getRole(), is(Role.SALE));
+
+        // Change password (bad request: short)
+        String passChangeReq = new ClassPathResource("user/password_change_short.json").getContentAsString(Charset.defaultCharset());
+
+        mockMvc.perform(post(API_ENDPOINT + "/user/changepass")
+                        .with(user(userUpdateRequest.getEmail())
+                                .password(userUpdateRequest.getPassword())
+                                .roles(roleUpdateResponse.getRole().name()))
+                        .characterEncoding(Charset.defaultCharset())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(passChangeReq))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString("timestamp")))
+                .andExpect(content().string(containsString("path")))
+                .andExpect(content().string(containsString("Password length must be 12 chars minimum!")))
+                .andDo(document("user/change_password_short"));
+
+        // Change password OK
+        final Resource passwordChangeResource = new ClassPathResource("user/password_change_ok.json");
+        passChangeReq = passwordChangeResource.getContentAsString(Charset.defaultCharset());
+
+        mockMvc.perform(post(API_ENDPOINT + "/user/changepass")
+                        .with(user(userUpdateRequest.getEmail())
+                                .password(userUpdateRequest.getPassword())
+                                .roles(roleUpdateResponse.getRole().name()))
+                        .characterEncoding(Charset.defaultCharset())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(passChangeReq))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("email")))
+                .andExpect(content().string(containsString("The password has been updated successfully")))
+                .andDo(document("user/change_password_ok")).andReturn();
 
         // Remove user
         result = this.mockMvc.perform(delete(API_ENDPOINT + "/user/{email}", userUpdateRequest.getEmail())

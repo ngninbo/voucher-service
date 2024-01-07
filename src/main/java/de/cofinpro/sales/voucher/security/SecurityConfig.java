@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/voucher").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/api/user", "/api/user/**").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/api/user/role").hasRole(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/api/user/changepass").hasAnyRole(Role.ADMIN.name(), Role.SUPPORT.name(), Role.SALE.name())
                         .requestMatchers(HttpMethod.DELETE, "/api/user/**").hasRole(Role.ADMIN.name())
                         .requestMatchers("/actuator/shutdown").permitAll() // needs to run test
                         .requestMatchers("/", "/api/user/signup").permitAll()

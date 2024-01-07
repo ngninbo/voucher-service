@@ -1,0 +1,6 @@
+[source,json,options="nowrap"]
+----
+{
+  "new_password": "n1m2m9301z24nqf"
+}
+----

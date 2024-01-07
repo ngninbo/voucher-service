@@ -1,6 +1,8 @@
 = Voucher Service documentation
 
-#Important#: This is the base path of all request endpoints when service is hosted on port `8080` for example `http://localhost:8080/voucher-service`
+This document provides useful snippets for testing voucher service
+
+The full API documentation can be found on the following swagger ui link: http://localhost:8080/voucher-service/swagger-ui/index.html[]
 
 == Add new user
 
@@ -101,6 +103,48 @@ include::{snippets}/user/update_role_ok/httpie-request.adoc[]
 
 .response-body
 include::{snippets}/user/update_role_ok/response-body.adoc[]
+
+== Change password failed (short)
+
+.http-request
+include::{snippets}/user/change_password_short/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/change_password_short/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/change_password_short/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/change_password_short/response-body.adoc[]
+
+== Change password successfully
+
+.http-request
+include::{snippets}/user/change_password_ok/http-request.adoc[]
+
+.curl-request
+include::{snippets}/user/change_password_ok/curl-request.adoc[]
+
+.httpie-request
+include::{snippets}/user/change_password_ok/httpie-request.adoc[]
+
+.response-body
+include::{snippets}/user/change_password_ok/response-body.adoc[]
+
+== changing same password
+
+.http-request
+include::change_password_same/http-request.adoc[]
+
+.curl-request
+include::change_password_same/curl-request.adoc[]
+
+.httpie-request
+include::change_password_same/httpie-request.adoc[]
+
+.response-body
+include::change_password_same/response-body.adoc[]
 
 === Deleting user
 

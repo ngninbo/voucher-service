@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/user/changepass' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "new_password": "n1m2m9301z24nqf"
+}'
+----

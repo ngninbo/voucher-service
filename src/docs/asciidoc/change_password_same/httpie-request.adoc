@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ echo '{
+  "new_password": "n1m2m9301z24nqf"
+}' | http POST 'http://localhost:8080/api/user/changepass' \
+    'Content-Type:application/json;charset=UTF-8'
+----

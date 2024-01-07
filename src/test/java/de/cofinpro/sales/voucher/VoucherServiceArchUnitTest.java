@@ -99,12 +99,13 @@ public class VoucherServiceArchUnitTest {
     @DisplayName("should assert classes from persistence package to match naming convention")
     void persistencePackages() {
 
-        noClasses().that()
+        classes().that()
                 .resideInAPackage(PERSISTENCE_PACKAGE)
                 .should().beInterfaces()
                 .andShould().beAssignableTo(CrudRepository.class)
                 .andShould().beAnnotatedWith(Repository.class)
-                .andShould().accessClassesThat().resideInAnyPackage(SERVICE_PACKAGE, DOMAIN_PACKAGE, SECURITY_PACKAGE)
+                .andShould().onlyBeAccessed().byClassesThat()
+                .resideInAnyPackage(PERSISTENCE_PACKAGE, SERVICE_PACKAGE, DOMAIN_PACKAGE, SECURITY_PACKAGE)
                 .check(importedClasses);
     }
 

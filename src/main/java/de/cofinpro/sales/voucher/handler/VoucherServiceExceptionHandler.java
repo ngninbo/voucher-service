@@ -1,6 +1,7 @@
 package de.cofinpro.sales.voucher.handler;
 
 import de.cofinpro.sales.voucher.domain.VoucherServiceCustomErrorMessage;
+import de.cofinpro.sales.voucher.exception.PasswordUpdateException;
 import de.cofinpro.sales.voucher.exception.RoleUpdateException;
 import de.cofinpro.sales.voucher.exception.UserAlreadyExistException;
 import de.cofinpro.sales.voucher.exception.UserNotFoundException;
@@ -31,7 +32,7 @@ public class VoucherServiceExceptionHandler {
     }
 
 
-    @ExceptionHandler({UserAlreadyExistException.class, RoleUpdateException.class})
+    @ExceptionHandler({UserAlreadyExistException.class, RoleUpdateException.class, PasswordUpdateException.class})
     public ResponseEntity<VoucherServiceCustomErrorMessage> handleConflict(Exception e, HttpServletRequest request) {
 
         HttpStatus status = HttpStatus.BAD_REQUEST;

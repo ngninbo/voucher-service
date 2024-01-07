@@ -36,6 +36,7 @@ public class User {
     private String email;
 
     @NotNull
+    // TODO: Validate password
     private String password;
 
     @Enumerated(EnumType.STRING)

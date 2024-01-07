@@ -1,9 +1,6 @@
 package de.cofinpro.sales.voucher.controller;
 
-import de.cofinpro.sales.voucher.domain.RoleChangeRequest;
-import de.cofinpro.sales.voucher.domain.UserDeletionResponse;
-import de.cofinpro.sales.voucher.domain.UserDto;
-import de.cofinpro.sales.voucher.domain.VoucherServiceCustomErrorMessage;
+import de.cofinpro.sales.voucher.domain.*;
 import de.cofinpro.sales.voucher.model.User;
 import de.cofinpro.sales.voucher.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -104,5 +103,22 @@ public class UserController {
     })
     public ResponseEntity<UserDto> changeRole(@Valid @RequestBody RoleChangeRequest request) {
         return ResponseEntity.ok(userService.update(request));
+    }
+
+    @PostMapping(path = "/user/changepass", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Change user password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", useReturnTypeSchema = true),
+            @ApiResponse(responseCode = "400", description = "The passwords must be different!"),
+            @ApiResponse(responseCode = "401",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VoucherServiceCustomErrorMessage.class)) }),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "User not found",
+                    content = { @Content(mediaType = "application/json", schema = @Schema(implementation = VoucherServiceCustomErrorMessage.class)) })
+    })
+    public ResponseEntity<PasswordChangeResponse> changePassword(@Valid @RequestBody PasswordChangeRequest request,
+                                                                 @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(userService.changePass(request, userDetails));
     }
 }

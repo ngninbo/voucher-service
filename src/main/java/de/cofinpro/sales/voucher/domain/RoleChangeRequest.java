@@ -1,5 +1,6 @@
 package de.cofinpro.sales.voucher.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.cofinpro.sales.voucher.model.Role;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotEmpty;
@@ -22,6 +23,7 @@ public class RoleChangeRequest {
     private String role;
 
     @AssertTrue(message = "Role must be SUPPORT or SALE")
+    @JsonIgnore
     public boolean isValidRole() {
         return isNotAdminRole().test(role);
     }

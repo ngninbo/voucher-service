@@ -1,9 +1,9 @@
 package de.cofinpro.sales.voucher.service;
 
-import de.cofinpro.sales.voucher.domain.RoleChangeRequest;
-import de.cofinpro.sales.voucher.domain.UserDeletionResponse;
-import de.cofinpro.sales.voucher.domain.UserDto;
+import de.cofinpro.sales.voucher.domain.*;
 import de.cofinpro.sales.voucher.model.User;
+import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +28,12 @@ public interface UserService {
 
     void resetFailedAttempts(String email);
 
+    @Transactional
     default void handleFailedAttempt(String email) {
         findByEmail(email).ifPresent(this::handleFailedAttempt);
     }
 
+    @Transactional
     default void handleFailedAttempt(User user) {
 
         if (user.isAdmin()) {
@@ -46,4 +48,8 @@ public interface UserService {
             lock(user);
         }
     }
+
+    PasswordChangeResponse changePass(PasswordChangeRequest request, UserDetails userDetails);
+
+    PasswordChangeResponse updateUserBy(String email, String newPassword);
 }

@@ -1,0 +1,10 @@
+[source,json,options="nowrap"]
+----
+{
+  "timestamp" : "2024-01-05T17:18:40.191999",
+  "status" : 400,
+  "error" : "Bad Request",
+  "message" : "The password must be different!",
+  "path" : "/api/user/changepass"
+}
+----
